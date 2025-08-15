@@ -6,15 +6,7 @@
   "outputDirectory": ".next",
   "installCommand": "npm install",
   "devCommand": "npm run dev",
-  "envVars": {},
-  "nextConfig": {
-    "images": {
-      "unoptimized": true
-    },
-    "output": "standalone",
-    "poweredByHeader": false,
-    "compress": true
-  }
+  "envVars": {}
 }
 
 
