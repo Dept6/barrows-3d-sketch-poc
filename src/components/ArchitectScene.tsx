@@ -59,7 +59,7 @@ function ArchitectModel({ modelPath = withBasePath("/models/scene.glb"), onCompu
     bbox.getBoundingSphere(sphere);
     const height = bbox.max.y - bbox.min.y;
     onComputedBounds?.({ radius: sphere.radius, height });
-  }, [gltf.scene]);
+  }, [gltf.scene, onComputedBounds]);
 
   return (
     <group ref={groupRef}>
