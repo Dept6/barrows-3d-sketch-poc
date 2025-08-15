@@ -2,7 +2,8 @@
 
 import { Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, useGLTF, Bounds, Center, Sky } from "@react-three/drei";
+import { OrbitControls, useGLTF, Bounds, Sky } from "@react-three/drei";
+import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import { EffectComposer, DepthOfField } from "@react-three/postprocessing";
 import * as THREE from "three";
 
@@ -41,7 +42,7 @@ function ArchitectModel({ modelPath = withBasePath("/models/scene.glb"), onCompu
         }
       }
     });
-  }, [gltf.scene]);
+  }, [gltf.scene, onComputedBounds]);
 
   useLayoutEffect(() => {
     if (!groupRef.current) return;
@@ -70,15 +71,13 @@ function ArchitectModel({ modelPath = withBasePath("/models/scene.glb"), onCompu
 useGLTF.preload(withBasePath("/models/scene.glb"));
 
 export default function ArchitectScene() {
-  const controlsRef = useRef<any>(null);
+  const controlsRef = useRef<OrbitControlsImpl | null>(null);
   const [fitDistance, setFitDistance] = useState<number | null>(null);
-  const [modelHeight, setModelHeight] = useState<number>(0);
 
   const handleBounds = ({ radius, height }: { radius: number; height: number }) => {
     // Approx fit distance for fov=40deg: r / tan(20deg) ~= 2.75r
     const dist = Math.max(1, radius * 2.8);
     setFitDistance(dist);
-    setModelHeight(height);
     // Center orbit target vertically to model mid-height
     if (controlsRef.current) {
       controlsRef.current.target.set(0, height * 0.5, 0);
