@@ -5,15 +5,10 @@ import type { NextConfig } from "next";
 // Next.js will serve the app under that base path. Locally, you can leave it unset.
 const configuredBasePath = process.env.NEXT_PUBLIC_BASE_PATH;
 
-// Export a function to ensure a fresh, mutable config object (some builders
-// mutate config, which can fail if the exported object is frozen)
-const nextConfig = (_phase: string, { defaultConfig }: { defaultConfig: NextConfig }): NextConfig => {
-  return {
-    ...defaultConfig,
-    basePath: configuredBasePath && configuredBasePath !== "/" ? configuredBasePath : undefined,
-    // Cloudflare/Webflow Cloud typically requires unoptimized images
-    images: { unoptimized: true },
-  };
+// Export a plain object so the Webflow builder can merge defaults without type errors
+const nextConfig: NextConfig = {
+  basePath: configuredBasePath && configuredBasePath !== "/" ? configuredBasePath : undefined,
+  images: { unoptimized: true },
 };
 
 export default nextConfig;
