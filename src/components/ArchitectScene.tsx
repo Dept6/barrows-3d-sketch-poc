@@ -11,7 +11,15 @@ type ArchitectModelProps = {
   onComputedBounds?: (info: { radius: number; height: number }) => void;
 };
 
-function ArchitectModel({ modelPath = "/models/scene.glb", onComputedBounds }: ArchitectModelProps) {
+function withBasePath(path: string): string {
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+  if (!basePath || basePath === "/") return path;
+  const normalizedBase = basePath.endsWith("/") ? basePath.slice(0, -1) : basePath;
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  return `${normalizedBase}${normalizedPath}`;
+}
+
+function ArchitectModel({ modelPath = withBasePath("/models/scene.glb"), onComputedBounds }: ArchitectModelProps) {
   const gltf = useGLTF(modelPath);
   const groupRef = useRef<THREE.Group>(null);
 
@@ -59,7 +67,7 @@ function ArchitectModel({ modelPath = "/models/scene.glb", onComputedBounds }: A
   );
 }
 
-useGLTF.preload("/models/scene.glb");
+useGLTF.preload(withBasePath("/models/scene.glb"));
 
 export default function ArchitectScene() {
   const controlsRef = useRef<any>(null);
