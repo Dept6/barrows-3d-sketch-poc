@@ -1,9 +1,10 @@
 import Image from "next/image";
+import ArchitectScene from "@/components/ArchitectScene";
 
 export default function Home() {
   return (
     <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
+      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start w-full">
         <Image
           className="dark:invert"
           src="/next.svg"
@@ -25,7 +26,11 @@ export default function Home() {
           </li>
         </ol>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
+        <div className="w-full h-[70vh] rounded-lg overflow-hidden border border-black/[.08] dark:border-white/[.145]">
+          <ArchitectScene />
+        </div>
+
+        <div className="flex gap-4 items-center flex-col sm:flex-row mt-6">
           <a
             className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
             href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
